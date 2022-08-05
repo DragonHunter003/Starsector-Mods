@@ -1,0 +1,10 @@
+{
+  "id":"console_extra_commands",
+  "name":"Console Commands - Extras",
+  "author":"J. Dimlight",
+  "utility":"true",
+  "version":"0.1",
+  "suppressVCUnsupported":true,
+  "description":"Adds custom commands to the console mod.",
+  "gameVersion":"0.95a-RC12"
+}
