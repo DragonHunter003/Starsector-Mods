@@ -1,0 +1,159 @@
+
+
+FleetMemberAPI playerFlagship = Global.getSector().getPlayerFleet().getFlagship();
+List<WeaponSlotAPI> shipWeaponSlotsList = playerFlagship.getHullSpec().getAllWeaponSlotsCopy();
+
+for(WeaponSlotAPI weaponSlot: shipWeaponSlotsList)
+{
+	Console.showMessage( weaponSlot.getId() + " " + playerFlagship.getVariant().getWeaponId(weaponSlot.getId()));
+}
+
+
+/* Add weapon to specific slot ID*/
+Global.getSector().getPlayerFleet().getFlagship().getVariant().addWeapon("slotid","weaponid")
+
+
+
+
+import com.fs.starfarer.api.campaign.*;
+List<SectorEntityToken>testList = Global.getSector().getEntitiesWithTag("salvageable");
+for(SectorEntityToken testEntity : testList){
+Console.showMessage(testEntity.getFullName());
+}
+
+import com.fs.starfarer.api.campaign.*;
+List<SectorEntityToken>testList = Global.getSector().getCustomEntitiesWithTag("salvageable");
+for(SectorEntityToken testEntity : testList){
+Console.showMessage(testEntity.getFullName());
+}
+
+runcode PlanetAPI star = ((StarSystemAPI) $loc).getStar(); 
+if (star != null) { 
+$loc.addCustomEntity(null, null, "inactive_gate", "neutral").setCircularOrbitPointingDown(star, VectorUtils.getAngle(star.getLocation(), $playerFleet.getLocation()), 
+MathUtils.getDistance(star.getLocation(), $playerFleet.getLocation()), 180f); } 
+
+runcode PlanetAPI star = ((StarSystemAPI) $loc).getStar(); 
+if (star != null) { 
+$loc.addCustomEntity(null, null, "rat_damaged_cryosleeper", "neutral").setCircularOrbitPointingDown(star, VectorUtils.getAngle(star.getLocation(), $playerFleet.getLocation()), 
+MathUtils.getDistance(star.getLocation(), $playerFleet.getLocation()), 180f); } 
+
+
+runcode Console.showMessage(Global.getSector().getCurrentLocation());
+
+runcode Console.showMessage($market.getPeopleCopy());
+
+/* List all people in current market */
+runcode 
+int index = 0;
+for(PersonAPI person : $market.getPeopleCopy())
+{
+	Console.showMessage(index+": "+person.getNameString());
+	index++;
+}
+
+/* Set relations with specific person to 100 */
+runcode 
+int index = 0;
+for(PersonAPI person : $market.getPeopleCopy())
+{
+	if(index == 1) 
+	{
+		Console.showMessage(person.getNameString());
+		person.getRelToPlayer().setRel(1);
+	}
+	index++;
+}
+
+/* give first active SiC officer specific skill */
+runcode 
+import second_in_command.specs.SCOfficer;
+import second_in_command.specs.SCSkillSpec;
+import second_in_command.SCData;
+import second_in_command.SCUtils;
+CampaignFleetAPI fleet;
+fleet = $sector.getPlayerFleet();
+SCData data = SCUtils.getFleetData(fleet);
+List<SCOfficer> activeOfficers = data.getAssignedOfficers();
+int index = 0;
+for (SCOfficer officer: activeOfficers)
+{
+	Console.showMessage(index + ": " + officer.getCurrentLevel());
+	if(index == 0)
+	{
+		officer.addSkill("sc_tactical_efficient_ordnance");
+	}
+}
+
+runcode
+import second_in_command.specs.SCOfficer;
+import second_in_command.specs.SCSkillSpec;
+import second_in_command.specs.SCBaseSkillPlugin;
+import second_in_command.specs.SCBaseAptitudePlugin;
+import second_in_command.SCData;
+import second_in_command.SCUtils;
+CampaignFleetAPI fleet;
+fleet = $sector.getPlayerFleet();
+SCData data = SCUtils.getFleetData(fleet);
+List<SCOfficer> activeOfficers = data.getAssignedOfficers();
+int index = 0;
+for (SCOfficer officer: activeOfficers)
+{
+        SCBaseAptitudePlugin aptitudePlugin = officer.getAptitudePlugin();
+        aptitudePlugin.clearSections();
+        aptitudePlugin.createSections();
+        Console.showMessage(aptitudePlugin.getSections());
+}
+
+
+/* Give all active Second in Command Officers all skills*/
+runcode 
+import second_in_command.specs.SCOfficer;
+import second_in_command.specs.SCSkillSpec;
+import second_in_command.specs.SCBaseSkillPlugin;
+import second_in_command.specs.SCBaseAptitudePlugin;
+import second_in_command.specs.SCAptitudeSection;
+import second_in_command.SCData;
+import second_in_command.SCUtils;
+CampaignFleetAPI fleet;
+fleet = $sector.getPlayerFleet();
+SCData data = SCUtils.getFleetData(fleet);
+List<SCOfficer> activeOfficers = data.getAssignedOfficers();
+int index = 0;
+for (SCOfficer officer: activeOfficers)
+{
+	Console.showMessage(index+": "+officer);
+	SCBaseAptitudePlugin aptitudePlugin = officer.getAptitudePlugin();
+	aptitudePlugin.clearSections();
+	aptitudePlugin.createSections();
+        for(SCAptitudeSection section : aptitudePlugin.getSections())
+	{
+		for(int i = 0; i < section.getSkills().size(); i++)
+		{ 
+			Console.showMessage(section.getSkills().get(i));
+			officer.addSkill((String)section.getSkills().get(i));
+		}	
+	}
+}
+/* List all Fleets in current Sector */
+runcode 
+int index = 0;
+for(CampaignFleetAPI fleet : $loc.getFleets())
+{
+	Console.showMessage(index + ":" + fleet.getName() + " "+ fleet.getCommander().getNameString()+ " "+fleet.getId() + " " + fleet.getCommander().getId());
+	index++;
+}
+
+/* Teleport Fleets to player */ 
+runcode 
+int index = 0; 
+CampaignFleetAPI playerFleet = $sector.getPlayerFleet();
+Vector2f playerFleetPos = playerFleet.getLocation();
+for(CampaignFleetAPI fleet : $loc.getFleets())
+{
+	Console.showMessage(fleet.getNameWithFaction());
+	if(index == 0 && fleet != playerFleet)
+	{
+		fleet.setLocation(playerFleetPos.x, playerFleetPos.y);
+	}
+	index++;
+} 
