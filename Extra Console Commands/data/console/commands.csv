@@ -1,3 +1,4 @@
 command,class,tags,syntax,help
 ExtraAddHullmod,data.console.commands.hullmod.ExtraAddHullmod,"extra,campaign,cheat",extraddhullmod ,Adds specified hullmod to your current flagship.
 ExtraAddPermaHullmod,data.console.commands.hullmod.ExtraAddPermaHullmod,"extra,campaign,cheat",extraddpermahullmod,Adds specified hullmod as a permanent mod to your flagship.
+ExtraListWeaponSlots,data.console.commands.weapons.ExtraListWeaponSlots,"extra,campaign,cheat",extralistweaponslots,Lists the weapon slots and weapons of your current flagship.
