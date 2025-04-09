@@ -1,0 +1,9 @@
+name,id,tier,rarity,tags,uiTags,base value,unlocked,hidden,hiddenEverywhere,tech/manufacturer,cost_frigate,cost_dest,cost_cruiser,cost_capital,script,desc,short,sprite
+Charon's Black Hole,jdlhm_charon_blackhole,6,,"special, req_spaceport",Requires Dock,150000,,,,High Tech,5,10,15,20,data.hullmods.CharonBlackhole,"Creating a stable black hole, cargo is sent into an unknown dimension massively increasing storage space on ships.
+
+Increases cargo capacity by %s
+Increases fuel capacity by %s",,graphics/hullmods/charon_blackhole.png
+Hermes' Drive,jdlhm_hermes_drive,6,,"special, req_spaceport",Requires Dock,150000,,,,High Tech,3,6,9,12,data.hullmods.HermesDrive,"<No description yet>
+Increases max speed by %s
+Increases max burn by %s
+Decreases fuel usage by %s",,graphics/hullmods/hermes_drive.png
