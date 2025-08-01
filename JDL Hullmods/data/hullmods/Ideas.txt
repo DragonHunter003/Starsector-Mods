@@ -1,0 +1,4 @@
+Athena's Insight:
++Reduces ship system cooldown, Increased ship system duration, Increases ship system charges (Hullmod version of skill)
++Increases visual range in combat
++Increases sensor range 
