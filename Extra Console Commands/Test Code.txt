@@ -1,6 +1,5 @@
 
-
-FleetMemberAPI playerFlagship = Global.getSector().getPlayerFleet().getFlagship();
+runcode FleetMemberAPI playerFlagship = Global.getSector().getPlayerFleet().getFlagship();
 List<WeaponSlotAPI> shipWeaponSlotsList = playerFlagship.getHullSpec().getAllWeaponSlotsCopy();
 
 for(WeaponSlotAPI weaponSlot: shipWeaponSlotsList)
@@ -134,6 +133,14 @@ for (SCOfficer officer: activeOfficers)
 		}	
 	}
 }
+
+/* Shows if player has specific skill */
+runcode
+Console.showMessage($playerFleet.getCommander().getStats().hasSkill("skillname"));
+
+/* Gives player a specific skill */
+runcode $playerFleet.getCommander().getStats().increaseSkill("skillname");
+
 /* List all Fleets in current Sector */
 runcode 
 int index = 0;
@@ -142,6 +149,52 @@ for(CampaignFleetAPI fleet : $loc.getFleets())
 	Console.showMessage(index + ":" + fleet.getName() + " "+ fleet.getCommander().getNameString()+ " "+fleet.getId() + " " + fleet.getCommander().getId());
 	index++;
 }
+
+/* List known hullmods of playerfaction */
+runcode
+Console.showMessage($sector.getPlayerFaction().getKnownShips());
+
+runcode Object[] knownPlayerShips = $sector.getPlayerFaction().getKnownShips().toArray();
+int index = 0;for(Object ship : knownPlayerShips)
+{
+	if(ship.toString().contains("_default_D"))
+	{
+		Console.showMessage(ship.toString());
+	}
+	index++;
+}
+
+
+/* List all known shiphullids, names and designation Used to create CSV for all known hullmods*/
+runcode for(ShipHullSpecAPI shipHullSpec : $settings.getAllShipHullSpecs())
+{
+	if($sector.getPlayerFaction().knowsShip(shipHullSpec.getHullId()))
+	{
+		Console.showMessage( 
+		shipHullSpec.getHullName() + "," //Name
+		+ shipHullSpec.getDesignation() + "," //Class
+		+ shipHullSpec.getHullSize() + "," //Size
+		+ ","	//TODO: Type
+		+ shipHullSpec.getManufacturer() + "," //Design Type
+		+ shipHullSpec.getBaseValue() + "," //Cost
+		+ shipHullSpec.getHullId()); //ID
+	}
+}
+
+/* List SkillIds for current admin */
+runcode 
+MutableCharacterStatsAPI adminStats = $sector.getCurrentlyOpenMarket().getAdmin().getStats();
+for (MutableCharacterStatsAPI.SkillLevelAPI skill : adminStats.getSkillsCopy())
+{
+Console.showMessage(skill.getSkill().getId());
+}
+
+/* Gives current admin all omega core skills */
+runcode 
+MutableCharacterStatsAPI adminStats = $sector.getCurrentlyOpenMarket().getAdmin().getStats();
+adminStats.increaseSkill("ethereal_enlightenment");
+adminStats.increaseSkill("acumenious_oracle");
+adminStats.increaseSkill("delphic_optimiser");
 
 /* Teleport Fleets to player */ 
 runcode 
