@@ -2,3 +2,11 @@ Athena's Insight:
 +Reduces ship system cooldown, Increased ship system duration, Increases ship system charges (Hullmod version of skill)
 +Increases visual range in combat
 +Increases sensor range 
+
+Hephaestus' Forge:
++Increases ship armour
++Armour regen
+
+Zeus ???:
++Spawn motes (if possible)
++Increase energy weapon range+damage
