@@ -39,6 +39,6 @@ public class HermesDrive extends BaseHullMod
 	{
 		stats.getMaxSpeed().modifyFlat(id, MAX_SPEED_BONUS);
 		stats.getMaxBurnLevel().modifyFlat(id, MAX_BURN_BONUS);
-		stats.getFuelUsageMod().modifyPercent(id, FUEL_CONSUMPTION_REDUCTION_MULTIPLIER);
+		stats.getFuelUseMod().modifyMult(id, FUEL_CONSUMPTION_REDUCTION_MULTIPLIER);
 	}
 }
