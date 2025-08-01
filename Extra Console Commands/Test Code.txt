@@ -170,11 +170,33 @@ runcode for(ShipHullSpecAPI shipHullSpec : $settings.getAllShipHullSpecs())
 {
 	if($sector.getPlayerFaction().knowsShip(shipHullSpec.getHullId()))
 	{
+		String typeString = "Warship";
+		String sizeString = shipHullSpec.getHullSize().toString();
+		sizeString = sizeString.replace("_SHIP","");
+		sizeString = sizeString.charAt(0) + sizeString.substring(1).toLowerCase();
+		if(shipHullSpec.isCarrier())
+		{
+			typeString = "Carrier";
+		};
+		if(shipHullSpec.isCivilianNonCarrier())
+		{
+			typeString = "Civilian";
+		}
+		if(shipHullSpec.isPhase())
+		{
+			typeString = "Phase";
+			if (shipHullSpec.isCivilianNonCarrier())
+			{
+				typeString += " (civilian)";
+			}
+		}
+		
+		
 		Console.showMessage( 
 		shipHullSpec.getHullName() + "," //Name
 		+ shipHullSpec.getDesignation() + "," //Class
-		+ shipHullSpec.getHullSize() + "," //Size
-		+ ","	//TODO: Type
+		+ sizeString + "," //Size
+		+ typeString + ","	//TODO: Type
 		+ shipHullSpec.getManufacturer() + "," //Design Type
 		+ shipHullSpec.getBaseValue() + "," //Cost
 		+ shipHullSpec.getHullId()); //ID
@@ -187,6 +209,19 @@ MutableCharacterStatsAPI adminStats = $sector.getCurrentlyOpenMarket().getAdmin(
 for (MutableCharacterStatsAPI.SkillLevelAPI skill : adminStats.getSkillsCopy())
 {
 Console.showMessage(skill.getSkill().getId());
+}
+
+/* List all ships stored in current market with unlearned blueprints */
+runcode FleetDataAPI storedShips = $sector.getCurrentlyOpenMarket().getSubmarket(Submarkets.SUBMARKET_STORAGE).getCargo().getMothballedShips(); 
+List<FleetMemberAPI> storedShipsList = storedShips.getMembersListCopy();
+for(FleetMemberAPI ship : storedShipsList)
+{
+	if(!$sector.getPlayerFaction().knowsShip(ship.getHullId().replace("_default_D","")))
+	{
+		Console.showMessage(ship.getShipName() + ": " + ship.getHullId().replace("_default_D",""));
+		//ship.setShipName("unlearned");
+		ship.setShipName($sector.getFaction("hegemony").pickRandomShipName());
+	}
 }
 
 /* Gives current admin all omega core skills */
